@@ -128,6 +128,6 @@ They should now open in their **default applications** automatically.
 
 ## 🧩 Optional: Manually create `.desktop` or `applications.menu`
 
-See full guide in [docs/fix-dolphin.md](docs/fix-dolphin.md) (not yet included).
+See full guide in [docs/Fixing_Dolphin_and_Hyprland.md](docs/Fixing_Dolphin_and_Hyprland.md).
 
 
