@@ -1,263 +1,206 @@
-## Guide: Fixing File Associations in Dolphin under Hyprland / Wayland / KDE6
+-----------------------------------------------------------------------------  
+# Guide: Fixing File Associations in Dolphin  
 
-*****Author******: n4zz + ChatGPT\*
-*****Version******: 2025-07\*
-*****System******: Manjaro / Arch Linux + Hyprland + KDE Frameworks 6*
 
-### Wayland/KDE6/Hyprland and the Dolphin File Manager
+- **Warning:** ! Use at your own risk !  
+- **Version:** 2025-07  
+- **System:** Manjaro / Arch Linux + Hyprland + KDE Frameworks 6  
 
-*Dolphin works well under Hyprland, but it does* *****not open files in
-associated applications***** *by default.*
+------------------------------------------------------------------------------  
 
-### 
+## Wayland/KDE6/Hyprland and the Dolphin File Manager  
 
-### What does this mean, and what are the consequences?
+Dolphin works well under Hyprland, but it does not open files in associated applications by default.  
 
-1.  *****The system menu file (******applications.menu******) is
-    missing******\
-    This file is part of the*
-    [*freedesktop.org*](https://freedesktop.org/) *standard, which KDE
-    uses for categorizing applications. If it\'s missing, it can affect
-    loading of file associations.*
+------------------------------------------------------------------------------  
 
-2.  *****The*** ***text/plain*** ***MIME type is \"dirty\" in user
-    packages, but lacks a corresponding system definition******\
-    This might indicate the core MIME type text/plain is missing or
-    broken in the system database (*/usr/share/mime*).*
+## What does this mean, and what are the consequences?  
+1. The system menu file (applications.menu) is missing  
+   This file is part of the freedesktop.org standard, which KDE uses for categorizing applications. If it's missing, it can affect loading of file associations.  
+       
+2. The text/plain MIME type is "dirty" in user packages, but lacks a corresponding system definition  
+   This might indicate the core MIME type text/plain is missing or broken in the system database (/usr/share/mime).  
+       
+3. The KSycoca database is broken or invalid  
+   The error kf.service.services: unexpected object entry means there’s a problem in KDE’s service cache.  
 
-3.  *****The KSycoca database is broken or invalid******\
-    The error kf.service.services: unexpected object entry means there's
-    a problem in KDE's service cache.*
+------------------------------------------------------------------------------  
 
-### 
+## Recommended Fix Steps  
 
-### 
 
-### Recommended Fix Steps
+### 1. Verify and update system MIME databases  
 
-#### 1. Verify and update system MIME databases
+Regenerate the MIME database:  
 
-Regenerate the MIME database:
+    `sudo update-mime-database /usr/share/mime`  
 
-sudo update-mime-database /usr/share/mime
+This restores core system MIME type definitions.  
 
-This restores core system MIME type definitions.
 
-#### 2. Clear and regenerate KDE cache (KSycoca)
+______________________________________________________________________________  
+### 2. Clear and regenerate KDE cache (KSycoca)  
 
-The KDE service cache might be broken:
+The KDE service cache might be broken:  
 
-rm \~/.cache/ksycoca6\_\*
+    `rm ~/.cache/ksycoca6_*`  
 
-*Then* *****log out and back in***** *to your KDE/Wayland session.*
+Then log out and back in to your KDE/Wayland session.  
 
-#### *3. Check if /etc/xdg/menus/applications.menu exists*
 
-ls /etc/xdg/menus/applications.menu
+______________________________________________________________________________
+### 3. Check if /etc/xdg/menus/applications.menu exists  
 
-*If missing applications.menu:*
+    `ls /etc/xdg/menus/applications.menu`  
 
-ls -l /etc/xdg/menus
+If missing applications.menu:  
 
-*output:*
+    `ls -l /etc/xdg/menus`  
 
-plasma-applications.menu
+output:  
 
-*\# shows plasma-applications.menu (typical in KDE6 installations)*
+`plasma-applications.menu`  
 
-##### 3.1 Create a symlink
+*shows plasma-applications.menu (typical in KDE6 installations)*  
 
-sudo ln -s /etc/xdg/menus/plasma-applications.menu
-/etc/xdg/menus/applications.menu
 
-##### 3.2 Clear KDE cache again
+  * 3.1 Create a symlink  
 
-rm \~/.cache/ksycoca6\_\*
+        `sudo ln -s /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu`
 
-##### 3.3 Regenerate the database
 
-kbuildsycoca6 \--noincremental \--track menu
+  * 3.2 Clear KDE cache again
 
-##### 3.4 Fix MIME association
+        `rm ~/.cache/ksycoca6_*`  
 
-xdg-mime default org.kde.kate.desktop text/plain
 
-##### 3.5 Restart Dolphin
+  * 3.3 Regenerate the database  
 
-killall dolphin
+        `kbuildsycoca6 --noincremental --track menu`  
 
-dolphin &
 
-Or log out and back in.
+  * 3.4 Fix MIME association  
 
-***3.6 Fixing mimeapps.list***
+        `xdg-mime default org.kde.kate.desktop text/plain`  
 
-cd/home/\$USER/.config
 
-sudo nano mimeapps.list
+  * 3.5 Restart Dolphin (Or log out and back in)  
 
-**You will see something like this:**
+        `killall dolphin`  
+        `dolphin &`  
 
-*\[Added Associations\]*
 
-*application/pdf=zathura.desktop;*
+  * 3.6 Fixing mimeapps.list  
 
-*application/x-python=pycharm.desktop;*
+        `cd/home/$USER/.config`  
 
-*audio/mpeg=qmmp.desktop;*
+        `sudo nano mimeapps.list`  
 
-*image/jpeg=org.kde.gwenview.desktop;*
 
-*text/html=code-oss.desktop;firefox.desktop;*
+    **You will see something like this*:
 
-*text/plain==org.kde.kate.desktop;*
+        [Added Associations]  
+        application/pdf=zathura.desktop;  
+        application/x-python=pycharm.desktop;  
+        audio/mpeg=qmmp.desktop;  
+        image/jpeg=org.kde.gwenview.desktop;  
+        text/html=code-oss.desktop;firefox.desktop;  
+        text/plain==org.kde.kate.desktop;  
 
-*video/x-matroska=mpv.desktop;*
+        [Default Applications]  
+        application/x-extension-html=firefox.desktop;  
+        application/x-extension-shtml=firefox.desktop;  
+        application/x-extension-xht=firefox.desktop;  
+        application/x-extension-xhtml=firefox.desktop;  
+        application/xhtml+xml=firefox.desktop;  
+        inode/directory=org.kde.dolphin.desktop;  
+        text/calendar=org.mozilla.Thunderbird.desktop;  
 
-*x-scheme-handler/mailto=org.mozilla.Thunderbird.desktop;*
+    **Important:** Every line must end with a semicolon `(;)`.  
 
-*video/mp4=mpv.desktop;*
 
-*\[Default Applications\]*
+    Replace all entries with their appropriate .desktop file names.  
+    For example:  
+    change: *text/plain=kate-6.desktop;*  
+    to: *text/plain=org.kde.kate.desktop;*  
 
-*application/x-extension-htm=firefox.desktop;*
 
-*application/x-extension-html=firefox.desktop;*
+  * 3.7 Verify using this command:  
 
-*application/x-extension-shtml=firefox.desktop;*
+        `xdg-mime query default text/plain`  
+       output:  
 
-*application/x-extension-xht=firefox.desktop;*
+       `org.kde.kate.desktop`  
 
-*application/x-extension-xhtml=firefox.desktop;*
 
-*application/xhtml+xml=firefox.desktop;*
+______________________________________________________________________________
+### 4. Test  
 
-*inode/directory=org.kde.dolphin.desktop;*
+Try opening the following file types in Dolphin:  
 
-*text/calendar=org.mozilla.Thunderbird.desktop;*
+    `• .txt, .jpg, .png, .mp3, .mp4, .odt, etc.`  
 
-*text/html=firefox.desktop;*
+All files should open in their default applications without prompting.  
 
-*video/x-matroska=mpv.desktop;*
 
-*x-scheme-handler/chrome=firefox.desktop;*
+______________________________________________________________________________
+### 5. Notes  
 
-*x-scheme-handler/http=firefox.desktop;*
+- Dolphin and kcmshell6 filetypes both read applications via applications.menu  
+- You must run kbuildsycoca6 after any change to menu files or .desktop files  
 
-*x-scheme-handler/https=firefox.desktop;*
 
-*x-scheme-handler/mailto=org.mozilla.Thunderbird.desktop;*
+______________________________________________________________________________
+### 6. Alternative: Manual .desktop file for text/plain if above steps fail  
 
-Replace all entries with their appropriate .desktop file names. For
-example:
+Create the file “.desktop“:  
 
-*change: *text/plain=kate-6.**desktop**;**
+    `sudo nano ~/.local/share/applications/org.kde.kate.desktop`  
 
-*to: *text/plain=org.kde.kate.desktop;**
+Paste:  
 
-******Important******: Every line must end with a semicolon (;).**
+    [Desktop Entry]  
+    Name=Kate  
+    Exec=kate %U  
+    Icon=kate  
+    Type=Application  
+    Terminal=false  
+    Categories=Utility;TextEditor;  
+    MimeType=text/plain;  
 
-##### 3.7 Verify using this command:
+Then run:  
 
-xdg-mime query default text/plain
+    `update-desktop-database ~/.local/share/applications`  
 
-*output:*
+______________________________________________________________________________
+### 7. Alternative: Manually create applications.menu  
 
-org.kde.kate.desktop
+   * 7.1 Create the directory (if needed):  
 
-#### *4. Test*
+      `sudo mkdir -p /etc/xdg/menus`  
 
-Try opening the following file types in Dolphin:
 
-- *.txt, .jpg, .png, .mp3, .mp4, .odt, etc.*
+   * 7.2 Create the file:  
 
-All files should open in their default applications without prompting.
+      `sudo nano /etc/xdg/menus/applications.menu`  
 
-#### 
+   Paste:  
 
-#### *5. Notes*
+    <!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN"  
+    "http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">  
+    <Menu>  
+    <Name>Applications</Name>  
+    <DefaultAppDirs/>  
+    <DefaultDirectoryDirs/>  
+    <Include>  
+        <All/>  
+    </Include>  
+    </Menu>  
+ 
+   This menu file tells KDE: “Use all applications from default locations (/usr/share/applications and ~/.local/share/applications) and create a full list.”  
+   Save (Ctrl+O, Enter) and close (Ctrl+X).  
 
-- *Dolphin and *kcmshell6 filetyp*es both read applications via
-  *applications.menu**
-- *You must run kbuildsycoca6 after* *****any***** *change to menu files
-  or .desktop files*
-- Known *bug*: If you see this warning:
+______________________________________________________________________________
+### 8. Conclusion  
 
-/usr/bin/xdg-open: line 1430: \[: : integer expression expected
-
-*Ignore it --- it's harmless and doesn't affect functionality
-(Wayland-related bug in xdg-utils).*
-
-#### 
-
-#### *6. Alternative: Manual .desktop file for text/plain if above steps fail*
-
-Create the file ".desktop":
-
-sudo nano \~/.local/share/applications/org.kde.kate.desktop
-
-*Paste:*
-
-*\[Desktop Entry\]*
-
-*Name=Kate*
-
-*Exec=kate %U*
-
-*Icon=kate*
-
-*Type=Application*
-
-*Terminal=false*
-
-*Categories=Utility;TextEditor;*
-
-*MimeType=text/plain;*
-
-**Then run:**
-
-update-desktop-database \~/.local/share/applications
-
-#### *7. Alternative: Manually create applications.menu*
-
-##### 7.1 Create the directory (if needed):
-
-sudo mkdir -p /etc/xdg/menus
-
-***7.2 Create the file:***
-
-sudo nano /etc/xdg/menus/applications.menu
-
-*Paste:*
-
-*\<!DOCTYPE Menu PUBLIC \"-//freedesktop//DTD Menu 1.0//EN\"*
-
-*\"http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd\"\>*
-
-*\<Menu\>*
-
-*\<Name\>Applications\</Name\>*
-
-*\<DefaultAppDirs/\>*
-
-*\<DefaultDirectoryDirs/\>*
-
-*\<Include\>*
-
-*\<All/\>*
-
-*\</Include\>*
-
-*\</Menu\>*
-
-*This menu file tells KDE: "Use all applications from default locations
-(*/usr/share/applications and \~/.local/share/applications*) and create
-a full list."*
-
-*Save (Ctrl+O, Enter) and close (Ctrl+X).*
-
-### *8. Conclusion*
-
-After completing this guide, Dolphin under Hyprland and KDE6 will be
-fully capable of opening files based on their type --- no need to
-manually select applications each time.
+After completing this guide, Dolphin under Hyprland and KDE6 will be fully capable of opening files based on their type — no need to manually select applications each time.
