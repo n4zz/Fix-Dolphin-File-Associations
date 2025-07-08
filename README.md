@@ -122,7 +122,6 @@ They should now open in their **default applications** automatically.
 ## 📝 Notes
 
 - Run `kbuildsycoca6` every time you change menu or `.desktop` files.
-- Errors like `[: : integer expression expected` from `xdg-open` under Wayland are harmless.
 
 ---
 
