@@ -2,11 +2,11 @@
 Fixing File Associations in Dolphin  ( Hyprland / Wayland / KDE6 )
 
 
-🛠️ A practical guide to repairing broken file associations in the **Dolphin file manager** when running on **Hyprland** with **KDE Frameworks 6** under **Wayland**.
-
+🛠️ This repository provides a step-by-step guide to fixing broken file associations in **Dolphin file manager** under **Hyprland** and **KDE 6 (Wayland)**.
+   Tested on Manjaro Linux, but should work on other KDE-based Wayland setups.
 ---
 
-## 📋 Overview
+## 📋 Overview - A practical guide
 
 Dolphin may not correctly open files in their associated applications when used under Hyprland + KDE6. This is due to missing or misconfigured components such as:
 
