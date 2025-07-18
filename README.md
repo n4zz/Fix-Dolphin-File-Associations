@@ -32,13 +32,13 @@ This guide walks you through the steps to fix it.
 ### 1. Update system MIME database
 
 ```bash
-sudo update-mime-database /usr/share/mime
+$ sudo update-mime-database /usr/share/mime
 ```
 
 ### 2. Clear KDE service cache (KSycoca)
 
 ```bash
-rm ~/.cache/ksycoca6_*
+$ rm ~/.cache/ksycoca6_*
 ```
 
 Then **logout and log back in** to your KDE/Wayland session.
@@ -50,28 +50,28 @@ Then **logout and log back in** to your KDE/Wayland session.
 Check if it exists:
 
 ```bash
-ls /etc/xdg/menus/applications.menu
+$ ls /etc/xdg/menus/applications.menu
 ```
 
 If it’s missing, create a symlink:
 
 ```bash
-sudo ln -s /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
+$ sudo ln -s /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
 ```
 
 Then regenerate cache:
 
 ```bash
-rm ~/.cache/ksycoca6_*
-kbuildsycoca6 --noincremental --track menu
-xdg-mime default org.kde.kate.desktop text/plain
+$ rm ~/.cache/ksycoca6_*
+$ kbuildsycoca6 --noincremental --track menu
+$ xdg-mime default org.kde.kate.desktop text/plain
 ```
 
 Restart Dolphin:
 
 ```bash
-killall dolphin
-dolphin &
+$ killall dolphin
+$ dolphin &
 ```
 
 ---
@@ -79,7 +79,7 @@ dolphin &
 ### 4. Verify file association
 
 ```bash
-xdg-mime query default text/plain
+$ xdg-mime query default text/plain
 # Should return:
 org.kde.kate.desktop
 ```
@@ -89,8 +89,8 @@ org.kde.kate.desktop
 ### 5. Edit `mimeapps.list` manually
 
 ```bash
-cd ~/.config
-nano mimeapps.list
+$ cd ~/.config
+$ nano mimeapps.list
 ```
 
 Replace invalid entries like:
