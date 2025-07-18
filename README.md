@@ -4,7 +4,7 @@ Fixing File Associations in Dolphin  ( Hyprland / Wayland / KDE6 )
 
 🛠️ This repository provides a step-by-step guide to fixing broken file associations in **Dolphin file manager** under **Hyprland** and **KDE 6 (Wayland)**.
 ---   
-   Tested on Manjaro Linux, but should work on other KDE-based Wayland setups.
+`Tested on Manjaro Linux, but should work on other KDE-based Wayland setups`.
 ---
 
 ## 📋 Overview - A practical guide
