@@ -1,11 +1,17 @@
-# Fix_Dolphin_File_Associations
-Fixing File Associations in Dolphin  ( Hyprland / Wayland / KDE6 )
+![Platform](https://img.shields.io/badge/platform-manjaro-green)
+![WM](https://img.shields.io/badge/window%20manager-Hyprland-blue)
+![Desktop](https://img.shields.io/badge/desktop-KDE6-blueviolet)
 
+# Fixing File Associations in Dolphin under Hyprland / KDE6 / Wayland
 
-🛠️ This repository provides a step-by-step guide to fixing broken file associations in **Dolphin file manager** under **Hyprland** and **KDE 6 (Wayland)**.
----   
-#### Tested on Manjaro Linux, but should work on other KDE-based Wayland setups.
----
+## 🛠️ About
+This repository provides a **step-by-step guide** to **fix broken MIME file associations** in **Dolphin** file manager under **Hyprland** and **KDE 6 (Wayland)**.
+
+✅ Tested on Manjaro/Arch Linux. May work with other KDE-Wayland setups.
+
+## 🔗 References
+- Reddit discussion on the fix :contentReference[oaicite:12]{index=12}  
+- Blog article: “Fixing the empty ‘Open With’ in Dolphin in Hyprland” :contentReference[oaicite:13]{index=13}
 
 ## 📋 Overview - A practical guide
 
