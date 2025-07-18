@@ -2,7 +2,7 @@
 ![WM](https://img.shields.io/badge/window%20manager-Hyprland-blue)
 ![Desktop](https://img.shields.io/badge/desktop-KDE6-blueviolet)
 
-# Fixing File Associations in Dolphin under Hyprland / KDE6 / Wayland
+# Fixing File Associations in Dolphin / Hyprland / KDE6 / Wayland
 
 ## 🛠️ About
 This repository provides a **step-by-step guide** to **fix broken MIME file associations** in **Dolphin** file manager under **Hyprland** and **KDE 6 (Wayland)**.
