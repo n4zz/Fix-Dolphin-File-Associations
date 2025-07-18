@@ -9,6 +9,8 @@ This repository provides a **step-by-step guide** to **fix broken MIME file asso
 
 ✅ Tested on Manjaro/Arch Linux. May work with other KDE-Wayland setups.
 
+---
+
 ## 📋 Overview - A practical guide
 
 Dolphin may not correctly open files in their associated applications when used under Hyprland + KDE6. This is due to missing or misconfigured components such as:
