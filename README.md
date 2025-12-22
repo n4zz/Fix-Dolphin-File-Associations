@@ -31,15 +31,20 @@ This guide walks you through the steps to fix it.
 - **File Manager**: Dolphin  
 
 ---      
-## 🔧 Quick Steps for minimal Archlinux & Hyprland      
+## 🔧 Quick Steps for minimal Archlinux & Hyprland 🔧      
+Open terminal and follow this steps
 ```bash
     sudo pacman -Sy archlinux-xdg-menu
     ls /etc/xdg/menus
+```
+output : arch-applications-menu
+```bash
     sudo mv arch-applications-menu applications.menu
     kbuildsycoca6 --noincremental
-```
-Done     
-
+```     
+** Check the file mimeapps.list according to step 5.**      
+DONE     
+      
 ---      
 ## 🔧 Fix Steps
 
