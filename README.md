@@ -30,8 +30,17 @@ This guide walks you through the steps to fix it.
 - **Environment**: Hyprland + KDE Frameworks 6  
 - **File Manager**: Dolphin  
 
----
+---      
+## 🔧 Quick Steps for minimal Archlinux & Hyprland      
+```bash
+    sudo pacman -Sy archlinux-xdg-menu
+    ls /etc/xdg/menus
+    sudo mv arch-applications-menu applications.menu
+    kbuildsycoca6 --noincremental
+```
+Done     
 
+---      
 ## 🔧 Fix Steps
 
 ### 1. Update system MIME database
